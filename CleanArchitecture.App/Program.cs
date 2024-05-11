@@ -3,7 +3,7 @@ using CleanArchitecture.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 StreamerContext context = new();
-//await AddNewRecords();
+await AddNewRecords();
 await QueryFilter();
 Console.ReadLine();
 return;
