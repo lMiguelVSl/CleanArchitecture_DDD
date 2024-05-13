@@ -3,10 +3,19 @@ using CleanArchitecture.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 StreamerContext context = new();
-await AddNewRecords();
-await QueryFilter();
+//await AddNewRecords();
+//await QueryFilter();
 Console.ReadLine();
 return;
+
+async Task QueryLinq()
+{
+    Console.WriteLine("Enter a streamer name:");
+    var streamerName = Console.ReadLine();
+    
+    var streamers = await (from i in context.Streamers where EF.Functions.Like(i.Name, $"%{streamerName}%") select i).ToListAsync();
+    streamers.ForEach(x => Console.WriteLine($"streamer: {x.Name}, with ID {x.Id}"));
+}
 
 async Task QueryMethods()
 {
