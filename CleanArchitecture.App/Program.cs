@@ -10,7 +10,9 @@ return;
 
 async Task QueryMethods()
 {
-    
+    var streamer_1 = await context.Streamers!.Where(e => e.Name!.Contains("t")).FirstAsync();
+    var streamer_2 = await context.Streamers!.Where(e => e.Name!.Contains("t")).FirstOrDefaultAsync();
+    var streamer_3 = await context.Streamers!.FirstOrDefaultAsync(e => e.Name!.Contains("t"));
 }
 
 async Task QueryFilter()
