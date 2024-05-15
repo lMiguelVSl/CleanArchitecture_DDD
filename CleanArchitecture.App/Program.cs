@@ -5,8 +5,19 @@ using Microsoft.EntityFrameworkCore;
 StreamerContext context = new();
 //await AddNewRecords();
 //await QueryFilter();
+await TrackingAndNotTracking();
 Console.ReadLine();
 return;
+
+async Task TrackingAndNotTracking()
+{
+    var streamerTracking = await context.Streamers!.FirstOrDefaultAsync(x => x.Id == 1);
+    var streamerNotTracking = await context.Streamers!.AsNoTracking().FirstOrDefaultAsync(x => x.Id == 2);
+    
+    streamerTracking.Name = "Streamer 1 tracking";
+    streamerNotTracking.Name = "Streamer 2 no tracking";
+    await context.SaveChangesAsync();
+}
 
 async Task QueryLinq()
 {
