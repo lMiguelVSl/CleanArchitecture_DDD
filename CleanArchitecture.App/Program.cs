@@ -10,7 +10,8 @@ StreamerContext context = new();
 //await QueryFilter();
 //await TrackingAndNotTracking();
 //await TestWizeLine();
-await AddNewStreamerWithVideo();
+//await AddNewStreamerWithVideo();
+await AddNewStreamerWithVideoId();
 Console.ReadLine();
 return;
 
@@ -26,6 +27,22 @@ async Task TestWizeLine()
             $"Cartoon: Title: {x.Title}, Year: {x.Year}, Creator: {x.Creator}, Rating: {x.Rating}, Genre: {x.Genre}, Runtime: {x.RuntimeInMinutes}, Episodes: {x.Episodes}, Image: {x.Image}, ID: {x.Id}"));
 }
 
+async Task AddNewStreamerWithVideoId()
+{
+    var streamer = await context.Streamers!.Where(s => s.Name == "west").AsQueryable().FirstOrDefaultAsync();
+
+    if (streamer != null)
+    {
+        var video = new Video
+        {
+            Name = $"Video from {streamer.Name} number 2",
+            StreamerId = streamer.Id
+        };
+
+        await context.AddAsync(video);
+        await context.SaveChangesAsync();
+    }
+}
 
 async Task AddNewStreamerWithVideo()
 {
@@ -40,7 +57,7 @@ async Task AddNewStreamerWithVideo()
         Streamer = streamer
     };
     
-    await context.Streamers!.AddAsync(streamer);
+    await context.AddAsync(video);
     await context.SaveChangesAsync();
 }
 
