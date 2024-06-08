@@ -11,7 +11,8 @@ StreamerContext context = new();
 //await TrackingAndNotTracking();
 //await TestWizeLine();
 //await AddNewStreamerWithVideo();
-await AddNewStreamerWithVideoId();
+//await AddNewStreamerWithVideoId();
+await AddNewActorWithVideo();
 Console.ReadLine();
 return;
 
@@ -25,6 +26,27 @@ async Task TestWizeLine()
     cartoonSerialized?.ForEach(x =>
         Console.WriteLine(
             $"Cartoon: Title: {x.Title}, Year: {x.Year}, Creator: {x.Creator}, Rating: {x.Rating}, Genre: {x.Genre}, Runtime: {x.RuntimeInMinutes}, Episodes: {x.Episodes}, Image: {x.Image}, ID: {x.Id}"));
+}
+
+async Task AddNewActorWithVideo()
+{
+    var actor = new Actor
+    {
+        Name = "Brad",
+        LastName = "Pitt"
+    };
+    
+    await context.AddAsync(actor);
+    await context.SaveChangesAsync();
+
+    var videoActor = new VideoActor
+    {
+        ActorId = actor.Id,
+        VideoId = 1
+    };
+    
+    await context.AddAsync(videoActor);
+    await context.SaveChangesAsync();
 }
 
 async Task AddNewStreamerWithVideoId()
